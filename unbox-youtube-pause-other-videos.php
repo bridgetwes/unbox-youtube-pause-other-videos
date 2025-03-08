@@ -31,3 +31,15 @@ function unbox_youtube_pause_other_videos() {
         )
     );
 }
+
+// Needed to control youtube videos with YouTube API
+function unbox_add_enablejsapi_to_youtube_embed($html, $url, $attr, $post_id) {
+	// Check if the URL is a YouTube URL
+    if (strpos($url, 'youtube.com') !== false || strpos($url, 'youtu.be') !== false) {
+        // Add 'enablejsapi=1' to the embed URL
+        $html = preg_replace('/(src="[^"]+)/', '$1&enablejsapi=1', $html);
+    }
+    return $html;
+}
+add_filter('embed_oembed_html', 'unbox_add_enablejsapi_to_youtube_embed', 10, 4);
+
